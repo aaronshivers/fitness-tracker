@@ -7,13 +7,15 @@ import { MaterialModule } from './material/material.module';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { TrainingComponent } from './training/training/training.component';
+import { CurrentTrainingComponent } from './training/current-training/current-training.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    TrainingComponent
+    TrainingComponent,
+    CurrentTrainingComponent
   ],
   imports: [
     BrowserModule,
