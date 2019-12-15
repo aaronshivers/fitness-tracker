@@ -10,7 +10,7 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: [ './nav.component.css' ],
 })
 export class NavComponent implements OnInit, OnDestroy {
-  isAuth: boolean;
+  isAuthenticated: boolean;
   authSubscription: Subscription;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -22,8 +22,8 @@ export class NavComponent implements OnInit, OnDestroy {
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.authService.authChange.subscribe((authStatus: boolean) => {
-      this.isAuth = authStatus;
+    this.authService.isAuthenticated.subscribe((authStatus: boolean) => {
+      this.isAuthenticated = authStatus;
     });
   }
 
