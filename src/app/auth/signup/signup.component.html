@@ -1,58 +1,48 @@
 <section>
   <form
-    #f="ngForm"
-    (ngSubmit)="onSubmit(f)"
+    (ngSubmit)="onSubmit()"
+    [formGroup]="signupForm"
     fxLayout="column"
     fxLayoutAlign="center center"
     fxLayoutGap="10px">
     <mat-form-field>
       <input
-        #emailInput="ngModel"
         autocomplete="email"
-        email
+        formControlName="email"
         matInput
-        name="email"
-        ngModel
         placeholder="Your Email"
         required
         type="email">
-      <mat-error *ngIf="emailInput.hasError('required')">Field must not be
-        empty
-      </mat-error>
-      <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid
-      </mat-error>
+      <mat-error>Field must not be empty.</mat-error>
+      <mat-error>Email is invalid</mat-error>
     </mat-form-field>
     <mat-form-field hintLabel="Should be at least 6 characters long.">
       <input
-        #pwInput="ngModel"
+        #password
         autocomplete="new-password"
+        formControlName="password"
         matInput
-        minlength="6"
-        name="password"
-        ngModel
         placeholder="Your Password"
-        required
         type="password">
-      <mat-hint align="end">{{ pwInput.value?.length }} / 6</mat-hint>
+      <mat-hint align="end">{{ password.value?.length }} / 6</mat-hint>
       <mat-error>Has to be at least 6 characters</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input
         [matDatepicker]="picker"
         [max]="maxDate"
-        matInput
         autocomplete="bday"
-        name="birthday"
-        ngModel
+        formControlName="birthday"
+        matInput
         placeholder="Your Birthday"
-        required>
+      >
       <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    <mat-checkbox name="agree" ngModel>Agree to Terms and Conditions.
+    <mat-checkbox formControlName="agree">Agree to Terms and Conditions.
     </mat-checkbox>
     <button
-      [disabled]="f.invalid"
+      [disabled]="signupForm.invalid"
       color="primary"
       mat-raised-button
       type="submit">Submit

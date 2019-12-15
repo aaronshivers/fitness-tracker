@@ -1,40 +1,31 @@
 <section>
   <form
-    #f="ngForm"
-    (ngSubmit)="onSubmit(f)"
+    (ngSubmit)="onSubmit()"
+    [formGroup]="loginForm"
     fxLayout="column"
     fxLayoutAlign="center center"
     fxLayoutGap="10px">
     <mat-form-field>
       <input
-        #email="ngModel"
         autocomplete="email"
-        email
+        formControlName="email"
         matInput
-        name="email"
-        ngModel
         placeholder="Your Email"
-        required
         type="email">
       <mat-hint>Enter your email.</mat-hint>
-      <mat-error *ngIf="email.hasError('required')">Email is required.
-      </mat-error>
+      <mat-error>Email is required.</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input
-        #password="ngModel"
         autocomplete="current-password"
         matInput
-        name="password"
-        ngModel
+        formControlName="password"
         placeholder="Your Password"
-        required
         type="password">
       <mat-hint>Enter your password.</mat-hint>
-      <mat-error *ngIf="password.hasError('required')">Password is required.
-      </mat-error>
+      <mat-error>Password is required.</mat-error>
     </mat-form-field>
-    <button [disabled]="f.invalid" color="primary" mat-raised-button>Submit
+    <button [disabled]="loginForm.invalid" color="primary" mat-raised-button>Submit
     </button>
   </form>
 </section>
