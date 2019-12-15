@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ExerciseService {
-  private exercises: Exercise[] = [
+  private allExercises: Exercise[] = [
     { id: 'push-ups', name: 'Push Ups', duration: 30, calories: 8 },
     { id: 'pull-ups', name: 'Pull Ups', duration: 60, calories: 8 },
     { id: 'sit-ups', name: 'Sit Ups', duration: 90, calories: 8 },
@@ -14,9 +14,17 @@ export class ExerciseService {
     { id: 'squats', name: 'Squats', duration: 160, calories: 8 },
   ];
 
+  private currentExercise: Exercise;
+
   constructor() { }
 
   getExercises(): Exercise[] {
-    return this.exercises.slice();
+    return this.allExercises.slice();
+  }
+
+  startExercise(selectedId: string): void {
+    this.currentExercise = this.allExercises.find(exercise => {
+      return exercise.id === selectedId;
+    });
   }
 }
