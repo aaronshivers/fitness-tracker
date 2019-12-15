@@ -41,7 +41,7 @@ export class AuthService {
     };
   }
 
-  isAuth() {
+  isLoggedIn() {
     return this.user !== null;
   }
 
