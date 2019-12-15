@@ -14,8 +14,8 @@ export class ExerciseService {
     { id: 'jogging', name: 'Jogging', duration: 120, calories: 8 },
     { id: 'squats', name: 'Squats', duration: 160, calories: 8 },
   ];
-
   private currentExercise: Exercise;
+  private exercises: Exercise[] = [];
 
   constructor() { }
 
@@ -24,7 +24,7 @@ export class ExerciseService {
   }
 
   getCurrentExercise(): Exercise {
-    return {...this.currentExercise};
+    return { ...this.currentExercise };
   }
 
   startExercise(selectedId: string): void {
@@ -32,7 +32,32 @@ export class ExerciseService {
       return exercise.id === selectedId;
     });
     this.exerciseChanged.next({
-      ...this.currentExercise
+      ...this.currentExercise,
     });
   }
+
+  cancelExercise(progress: number): void {
+    this.stopExercise({
+      duration: this.currentExercise.duration * progress / 100,
+      calories: this.currentExercise.duration * progress / 100,
+      state: 'cancelled',
+    });
+  }
+
+  completeExercise(): void {
+    this.stopExercise({ state: 'completed' });
+  }
+
+  stopExercise(exerciseStatus): void {
+    this.exercises.push({
+      ...this.currentExercise,
+      duration: exerciseStatus.duration,
+      calories: exerciseStatus.calories,
+      date: new Date(),
+      state: exerciseStatus.calories,
+    });
+    this.currentExercise = null;
+    this.exerciseChanged.next(null);
+  }
 }
+
