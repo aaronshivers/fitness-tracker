@@ -3,11 +3,12 @@
     #f="ngForm"
     (ngSubmit)="onSubmit(f)"
     fxLayout="column"
-    fxLayoutGap="10px"
-    fxLayoutAlign="center center">
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px">
     <mat-form-field>
       <input
         #emailInput="ngModel"
+        autocomplete="email"
         email
         matInput
         name="email"
@@ -24,6 +25,7 @@
     <mat-form-field hintLabel="Should be at least 6 characters long.">
       <input
         #pwInput="ngModel"
+        autocomplete="new-password"
         matInput
         minlength="6"
         name="password"
@@ -39,6 +41,7 @@
         [matDatepicker]="picker"
         [max]="maxDate"
         matInput
+        autocomplete="bday"
         name="birthday"
         ngModel
         placeholder="Your Birthday"
@@ -48,6 +51,11 @@
     </mat-form-field>
     <mat-checkbox name="agree" ngModel>Agree to Terms and Conditions.
     </mat-checkbox>
-    <button [disabled]="f.invalid" color="primary" mat-raised-button type="submit">Submit</button>
+    <button
+      [disabled]="f.invalid"
+      color="primary"
+      mat-raised-button
+      type="submit">Submit
+    </button>
   </form>
 </section>

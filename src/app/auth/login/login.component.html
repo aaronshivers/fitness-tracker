@@ -8,6 +8,7 @@
     <mat-form-field>
       <input
         #email="ngModel"
+        autocomplete="email"
         email
         matInput
         name="email"
@@ -16,11 +17,13 @@
         required
         type="email">
       <mat-hint>Enter your email.</mat-hint>
-      <mat-error *ngIf="email.hasError('required')">Email is required.</mat-error>
+      <mat-error *ngIf="email.hasError('required')">Email is required.
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <input
         #password="ngModel"
+        autocomplete="current-password"
         matInput
         name="password"
         ngModel
@@ -28,8 +31,10 @@
         required
         type="password">
       <mat-hint>Enter your password.</mat-hint>
-      <mat-error *ngIf="password.hasError('required')">Password is required.</mat-error>
+      <mat-error *ngIf="password.hasError('required')">Password is required.
+      </mat-error>
     </mat-form-field>
-    <button [disabled]="f.invalid" mat-raised-button color="primary">Submit</button>
+    <button [disabled]="f.invalid" color="primary" mat-raised-button>Submit
+    </button>
   </form>
 </section>
