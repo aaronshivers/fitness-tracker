@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import {
-  MatButtonModule, MatCheckboxModule,
+  MatButtonModule,
+  MatCheckboxModule,
   MatDatepickerModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
   MatNativeDateModule,
+  MatTabsModule,
 } from '@angular/material';
 
 const MaterialComponents = [
@@ -16,6 +18,7 @@ const MaterialComponents = [
   MatInputModule,
   MatFormFieldModule,
   MatNativeDateModule,
+  MatTabsModule,
 ];
 
 @NgModule({
