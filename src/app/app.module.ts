@@ -21,6 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { StopTrainingComponent } from './training/stop-training/stop-training.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MatListModule } from '@angular/material/list';
     NewTrainingComponent,
     PastTrainingComponent,
     WelcomeComponent,
-    NavComponent
+    NavComponent,
+    StopTrainingComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,8 @@ import { MatListModule } from '@angular/material/list';
     MatListModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ],
+  entryComponents: [ StopTrainingComponent ],
 })
-export class AppModule { }
+export class AppModule {
+}
