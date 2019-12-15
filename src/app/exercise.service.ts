@@ -23,6 +23,10 @@ export class ExerciseService {
     return this.allExercises.slice();
   }
 
+  getCurrentExercise(): Exercise {
+    return {...this.currentExercise};
+  }
+
   startExercise(selectedId: string): void {
     this.currentExercise = this.allExercises.find(exercise => {
       return exercise.id === selectedId;
