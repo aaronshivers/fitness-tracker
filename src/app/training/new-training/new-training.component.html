@@ -8,8 +8,8 @@
         <mat-select>
           <mat-option
             *ngFor="let exercise of exercises"
-            [value]="exercise.value">
-            {{exercise.viewValue}}
+            [value]="exercise.id">
+            {{exercise.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>

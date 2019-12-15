@@ -1,9 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-
-interface Exercise {
-  value: string;
-  viewValue: string;
-}
+import { ExerciseService } from '../../exercise.service';
+import { Exercise } from '../../exercise';
 
 @Component({
   selector: 'app-new-training',
@@ -12,19 +9,20 @@ interface Exercise {
 })
 export class NewTrainingComponent implements OnInit {
   @Output() startTraining = new EventEmitter<boolean>();
-  exercises: Exercise[] = [
-    { value: 'push-ups', viewValue: 'Push Ups' },
-    { value: 'pull-ups', viewValue: 'Pull Ups' },
-    { value: 'sit-ups', viewValue: 'Sit Ups' },
-    { value: 'jogging', viewValue: 'Jogging' },
-  ];
+  exercises: Exercise[];
 
-  constructor() { }
+  constructor(private exerciseService: ExerciseService) { }
 
   ngOnInit() {
+    this.getExercises();
+  }
+
+  getExercises(): void {
+    this.exercises = this.exerciseService.getExercises();
   }
 
   onStartTraining() {
     this.startTraining.emit();
   }
+
 }
