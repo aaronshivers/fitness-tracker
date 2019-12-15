@@ -15,7 +15,7 @@ export class ExerciseService {
     { id: 'squats', name: 'Squats', duration: 160, calories: 8 },
   ];
   private currentExercise: Exercise;
-  private exercises: Exercise[] = [];
+  private completedOrCancelledExercises: Exercise[] = [];
 
   constructor() { }
 
@@ -37,27 +37,32 @@ export class ExerciseService {
   }
 
   cancelExercise(progress: number): void {
-    this.stopExercise({
+    this.completedOrCancelledExercises.push({
+      ...this.currentExercise,
       duration: this.currentExercise.duration * progress / 100,
-      calories: this.currentExercise.duration * progress / 100,
+      calories: this.currentExercise.calories * progress / 100,
+      date: new Date(),
       state: 'cancelled',
     });
+    this.clearExercise();
   }
 
   completeExercise(): void {
-    this.stopExercise({ state: 'completed' });
+    this.completedOrCancelledExercises.push({
+      ...this.currentExercise,
+      date: new Date(),
+      state: 'completed',
+    });
+    this.clearExercise();
   }
 
-  stopExercise(exerciseStatus): void {
-    this.exercises.push({
-      ...this.currentExercise,
-      duration: exerciseStatus.duration,
-      calories: exerciseStatus.calories,
-      date: new Date(),
-      state: exerciseStatus.calories,
-    });
+  clearExercise(): void {
     this.currentExercise = null;
     this.exerciseChanged.next(null);
+  }
+
+  getCompletedOrdCancelledExercises(): Exercise[] {
+    return this.completedOrCancelledExercises;
   }
 }
 
