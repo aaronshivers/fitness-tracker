@@ -1,3 +1,7 @@
+.signup-component {
+  padding: 30px;
+}
+
 mat-form-field {
   width: 300px;
 }
