@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth, User } from 'firebase/app';
@@ -15,18 +15,24 @@ export class AuthService {
     this.user = afAuth.authState;
   }
 
-  login(): void {
-    const provider = new auth.GoogleAuthProvider();
-    this.afAuth.auth.signInWithPopup(provider).then(() => {
-      this.router.navigate([ 'training' ]);
+  initAuthListener() {
+    this.afAuth.authState.subscribe((user: User | null) => {
+      if (user) {
+        this.router.navigate([ 'training' ]);
+      } else {
+        this.exerciseService.cancelSubscriptions();
+        this.router.navigate([ 'login' ]);
+      }
     });
   }
 
+  login(): void {
+    const provider = new auth.GoogleAuthProvider();
+    this.afAuth.auth.signInWithPopup(provider);
+  }
+
   logout(): void {
-    this.afAuth.auth.signOut().then(() => {
-      this.exerciseService.cancelSubscriptions();
-      this.router.navigate([ 'login' ]);
-    });
+    this.afAuth.auth.signOut();
   }
 
   getUser(): Observable<User> {
