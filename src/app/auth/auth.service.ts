@@ -1,52 +1,33 @@
 import { Injectable } from '@angular/core';
-import { User } from './user';
-import { AuthData } from './auth-data';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth, User } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  isAuthenticated = new Subject<boolean>();
-  private user: User;
+  user: Observable<User>;
 
-  constructor(private router: Router) {}
-
-  registerUser(authData: AuthData) {
-    this.user = {
-      email: authData.email,
-      userId: Math.round(Math.random() * 1000).toString(),
-    };
-    this.afterAuthenticating();
+  constructor(private router: Router, private afAuth: AngularFireAuth) {
+    this.user = afAuth.authState;
   }
 
-  login(authData: AuthData) {
-    this.user = {
-      email: authData.email,
-      userId: Math.round(Math.random() * 1000).toString(),
-    };
-    this.afterAuthenticating();
+  login(): void {
+    const provider = new auth.GoogleAuthProvider();
+    this.afAuth.auth.signInWithPopup(provider).then(() => {
+      this.router.navigate([ 'training' ]);
+    });
   }
 
   logout() {
-    this.user = null;
-    this.isAuthenticated.next(false);
-    this.router.navigate(['/login']);
+    this.afAuth.auth.signOut().then(() => {
+      this.router.navigate([ 'login' ]);
+    });
   }
 
-  getUser() {
-    return {
-      ...this.user,
-    };
-  }
-
-  isLoggedIn() {
-    return this.user !== null;
-  }
-
-  private afterAuthenticating() {
-    this.isAuthenticated.next(true);
-    this.router.navigate(['/training']);
+  getUser(): Observable<User> {
+    return this.user;
   }
 }

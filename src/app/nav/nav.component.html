@@ -5,19 +5,15 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a *ngIf="!isAuthenticated" mat-list-item (click)="drawer.close()" routerLink="/signup">
-        <mat-icon>face</mat-icon>
-        <span class="nav-caption">Signup</span>
-      </a>
-      <a *ngIf="!isAuthenticated" mat-list-item (click)="drawer.close()" routerLink="/login">
+      <a *ngIf="!user" mat-list-item (click)="drawer.close()" routerLink="/login">
         <mat-icon>input</mat-icon>
         <span class="nav-caption">Login</span>
       </a>
-      <a *ngIf="isAuthenticated" mat-list-item (click)="drawer.close()" routerLink="/training">
+      <a *ngIf="user" mat-list-item (click)="drawer.close()" routerLink="/training">
         <mat-icon>fitness_center</mat-icon>
         <span class="nav-caption">Training</span>
       </a>
-      <mat-list-item *ngIf="isAuthenticated" (click)="drawer.close()">
+      <mat-list-item *ngIf="user" (click)="drawer.close()">
         <button mat-icon-button>
           <mat-icon>eject</mat-icon>
           <span class="nav-caption" (click)="onLogout()">Logout</span>

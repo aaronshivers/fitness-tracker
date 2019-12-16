@@ -1,31 +1,5 @@
-<section class="login-component">
-  <form
-    (ngSubmit)="onSubmit()"
-    [formGroup]="loginForm"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    fxLayoutGap="10px">
-    <mat-form-field>
-      <input
-        autocomplete="email"
-        formControlName="email"
-        matInput
-        placeholder="Your Email"
-        type="email">
-      <mat-hint>Enter your email.</mat-hint>
-      <mat-error>Email is required.</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        autocomplete="current-password"
-        matInput
-        formControlName="password"
-        placeholder="Your Password"
-        type="password">
-      <mat-hint>Enter your password.</mat-hint>
-      <mat-error>Password is required.</mat-error>
-    </mat-form-field>
-    <button [disabled]="loginForm.invalid" color="primary" mat-raised-button>Submit
-    </button>
-  </form>
+<section fxLayoutAlign="center" class="login-component">
+  <button (click)="onLogin()" color="primary" mat-raised-button>
+    Login with Google
+  </button>
 </section>
