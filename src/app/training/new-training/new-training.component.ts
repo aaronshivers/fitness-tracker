@@ -15,7 +15,7 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
   exercises: Exercise[];
   exerciseSubscription: Subscription;
 
-  constructor(private exerciseService: ExerciseService, private db: AngularFirestore) { }
+  constructor(private exerciseService: ExerciseService) { }
 
   ngOnInit() {
     this.getExercises();
