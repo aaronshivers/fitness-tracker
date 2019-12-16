@@ -1,34 +1,37 @@
 <section class="new-training" fxLayout fxLayoutAlign="center">
-  <div *ngIf="exercises; then showStartWorkout else showSpinner"></div>
-  <ng-template #showStartWorkout>
-    <form #f="ngForm" (ngSubmit)="onStartTraining(f)">
-      <mat-card fxFlex="400px" fxFlex.xs="100%">
-        <mat-card-title fxLayoutAlign="center">Time to start a workout.
-        </mat-card-title>
-        <mat-card-content fxLayoutAlign="center">
-          <mat-form-field>
-            <mat-label>Select an Exercise</mat-label>
-            <mat-select name="exercise" ngModel required>
-              <mat-option
-                *ngFor="let exercise of exercises"
-                [value]="exercise.id">
-                {{exercise.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-card-content>
-        <mat-card-actions fxLayoutAlign="center">
-          <button
-            [disabled]="f.invalid"
-            color="accent"
-            mat-raised-button
-            type="submit">Start
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </form>
-  </ng-template>
-  <ng-template #showSpinner>
-    <mat-spinner></mat-spinner>
-  </ng-template>
+  <form #f="ngForm" (ngSubmit)="onStartTraining(f)">
+    <mat-card fxFlex="400px" fxFlex.xs="100%">
+      <mat-card-title fxLayoutAlign="center">Time to start a workout.
+      </mat-card-title>
+      <mat-card-content fxLayoutAlign="center">
+        <mat-spinner *ngIf="isLoading"></mat-spinner>
+        <mat-form-field *ngIf="!isLoading && exercises">
+          <mat-label>Select an Exercise</mat-label>
+          <mat-select name="exercise" ngModel required>
+            <mat-option
+              *ngFor="let exercise of exercises"
+              [value]="exercise.id">
+              {{exercise.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions *ngIf="!isLoading" fxLayoutAlign="center">
+        <button
+          *ngIf="exercises"
+          [disabled]="f.invalid"
+          color="accent"
+          mat-raised-button
+          type="submit">Start
+        </button>
+        <button
+          (click)="fetchExercises()"
+          *ngIf="!exercises"
+          color="accent"
+          mat-raised-button
+          type="button">Fetch Again
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
 </section>

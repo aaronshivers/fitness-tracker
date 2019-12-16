@@ -6,7 +6,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatNativeDateModule, MatPaginatorModule, MatProgressSpinnerModule, MatSelectModule, MatSortModule, MatTableModule,
+  MatNativeDateModule, MatPaginatorModule, MatProgressSpinnerModule, MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule,
   MatTabsModule,
 } from '@angular/material';
 
@@ -22,6 +22,7 @@ const MaterialComponents = [
   MatNativeDateModule,
   MatSelectModule,
   MatSortModule,
+  MatSnackBarModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
   MatTableModule,
