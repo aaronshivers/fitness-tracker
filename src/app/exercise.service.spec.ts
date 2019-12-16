@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ExerciseService } from './exercise.service';
 
-describe('TrainingService', () => {
+describe('ExerciseService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
