@@ -26,6 +26,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
+import { UiService } from './shared/ui.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
     MatListModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [ UiService ],
   bootstrap: [ AppComponent ],
   entryComponents: [ StopTrainingComponent ],
 })

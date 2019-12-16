@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth, User } from 'firebase/app';
 import { ExerciseService } from '../exercise.service';
+import { UiService } from '../shared/ui.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { ExerciseService } from '../exercise.service';
 export class AuthService {
   user: Observable<User>;
 
-  constructor(private router: Router, private afAuth: AngularFireAuth, private exerciseService: ExerciseService) {
+  constructor(private router: Router, private afAuth: AngularFireAuth, private exerciseService: ExerciseService, private uiService: UiService) {
     this.user = afAuth.authState;
   }
 
@@ -27,8 +28,11 @@ export class AuthService {
   }
 
   login(): void {
+    this.uiService.loadingStateChanged.next(true);
     const provider = new auth.GoogleAuthProvider();
-    this.afAuth.auth.signInWithPopup(provider);
+    this.afAuth.auth.signInWithPopup(provider).then(() => {
+      this.uiService.loadingStateChanged.next(false);
+    });
   }
 
   logout(): void {

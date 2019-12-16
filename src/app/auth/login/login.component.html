@@ -1,5 +1,11 @@
 <section fxLayoutAlign="center" class="login-component">
-  <button (click)="onLogin()" color="primary" mat-raised-button>
-    Login with Google
-  </button>
+  <div *ngIf="isLoading; then showSpinner else showLoginButton"></div>
+  <ng-template #showSpinner>
+    <mat-spinner></mat-spinner>
+  </ng-template>
+  <ng-template #showLoginButton>
+    <button (click)="onLogin()" color="primary" mat-raised-button>
+      Login with Google
+    </button>
+  </ng-template>
 </section>
