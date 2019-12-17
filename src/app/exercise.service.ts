@@ -4,6 +4,9 @@ import { Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UiService } from './shared/ui.service';
+import { Store } from '@ngrx/store';
+import * as fromRoot from './app.reducer';
+import * as UI from './shared/ui.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -16,28 +19,48 @@ export class ExerciseService {
   private currentExercise: Exercise;
   private firebaseSubscriptions: Subscription[] = [];
 
-  constructor(private db: AngularFirestore, private uiService: UiService) { }
+  constructor(
+    private db: AngularFirestore,
+    private uiService: UiService,
+    private store: Store<{ ui: fromRoot.State }>,
+  ) {
+  }
 
   fetchAllExercises(): void {
-    this.firebaseSubscriptions.push(this.db.collection('allExercises').snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Exercise;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      })),
-    ).subscribe((exercises: Exercise[]) => {
-      this.uiService.loadingStateChanged.next(false);
-      this.allExercises = exercises;
-      this.exercisesChanged.next([ ...this.allExercises ]);
-    }, error => {
-      this.uiService.loadingStateChanged.next(false);
-      this.uiService.showSnackbar('Failed to fetch exercises, please try again later.', null, 3000);
-      this.exercisesChanged.next(null);
-    }));
+    this.store.dispatch(new UI.StartLoading());
+
+    this.firebaseSubscriptions.push(
+      this
+        .db
+        .collection('allExercises')
+        .snapshotChanges()
+        .pipe(
+          map(actions => actions.map(a => {
+            const data = a.payload.doc.data() as Exercise;
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          })),
+        )
+        .subscribe((exercises: Exercise[]) => {
+          this.allExercises = exercises;
+          this.exercisesChanged.next([ ...this.allExercises ]);
+          this.store.dispatch(new UI.StopLoading());
+        }, () => {
+          this.uiService.showSnackbar(
+            'Failed to fetch exercises, please try again later.',
+            null,
+            3000,
+          );
+          this.exercisesChanged.next(null);
+          this.store.dispatch(new UI.StopLoading());
+        }),
+    );
   }
 
   cancelSubscriptions() {
-    this.firebaseSubscriptions.forEach(subscription => subscription.unsubscribe());
+    this
+      .firebaseSubscriptions
+      .forEach(subscription => subscription.unsubscribe());
   }
 
   getCurrentExercise(): Exercise {
@@ -79,9 +102,13 @@ export class ExerciseService {
   }
 
   fetchCompletedOrdCancelledExercises(): void {
-    this.firebaseSubscriptions.push(this.db.collection('completedExercises').valueChanges().subscribe((exercises: Exercise[]) => {
-      this.completedExercisesChanged.next(exercises);
-    }));
+    this
+      .firebaseSubscriptions
+      .push(this.db.collection('completedExercises')
+        .valueChanges()
+        .subscribe((exercises: Exercise[]) => {
+          this.completedExercisesChanged.next(exercises);
+        }));
   }
 
   private addDataToDatabase(exercise: Exercise): void {

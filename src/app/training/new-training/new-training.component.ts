@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ExerciseService } from '../../exercise.service';
 import { Exercise } from '../../exercise';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { UiService } from '../../shared/ui.service';
+import { Observable, Subscription } from 'rxjs';
+import * as fromRoot from '../../app.reducer';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-new-training',
@@ -12,23 +13,25 @@ import { UiService } from '../../shared/ui.service';
 })
 export class NewTrainingComponent implements OnInit, OnDestroy {
   exercises: Exercise[];
-  isLoading = true;
+  isLoading$: Observable<boolean>;
   exerciseSubscription: Subscription;
-  private loadingSubscription: Subscription;
 
-  constructor(private exerciseService: ExerciseService, private uiService: UiService) { }
+  constructor(
+    private exerciseService: ExerciseService,
+    private store: Store<{ ui: fromRoot.State }>,
+  ) {
+  }
 
   ngOnInit() {
+    this.isLoading$ = this.store.select(fromRoot.getIsLoading);
     this.getExercises();
   }
 
   getExercises(): void {
-    this.loadingSubscription = this.uiService.loadingStateChanged.subscribe((isLoading: boolean) => {
-      this.isLoading = isLoading;
-    });
-    this.exerciseSubscription = this.exerciseService.exercisesChanged.subscribe((exercises: Exercise[]) => {
-      this.exercises = exercises;
-    });
+    this.exerciseSubscription = this.exerciseService.exercisesChanged.subscribe(
+      (exercises: Exercise[]) => {
+        this.exercises = exercises;
+      });
     this.fetchExercises();
   }
 
@@ -36,16 +39,13 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
     this.exerciseService.startExercise(form.value.exercise);
   }
 
+  fetchExercises() {
+    this.exerciseService.fetchAllExercises();
+  }
+
   ngOnDestroy(): void {
     if (this.exerciseSubscription) {
       this.exerciseSubscription.unsubscribe();
     }
-    if (this.loadingSubscription) {
-      this.loadingSubscription.unsubscribe();
-    }
-  }
-
-  fetchExercises() {
-    this.exerciseService.fetchAllExercises();
   }
 }
