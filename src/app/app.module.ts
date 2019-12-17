@@ -15,6 +15,8 @@ import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { UiService } from './shared/ui.service';
 import { AuthModule } from './auth/auth.module';
 import { TrainingModule } from './training/training.module';
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './app.reducer';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { TrainingModule } from './training/training.module';
     MaterialModule,
     AppRoutingModule,
     LayoutModule,
+    StoreModule.forRoot({ ui: appReducer }),
     TrainingModule,
   ],
   providers: [ UiService ],

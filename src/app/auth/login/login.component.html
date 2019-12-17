@@ -1,5 +1,5 @@
 <section fxLayoutAlign="center" class="login-component">
-  <div *ngIf="isLoading; then showSpinner else showLoginButton"></div>
+  <div *ngIf="isLoading$ | async; then showSpinner else showLoginButton"></div>
   <ng-template #showSpinner>
     <mat-spinner></mat-spinner>
   </ng-template>
