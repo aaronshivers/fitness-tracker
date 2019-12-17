@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material/material.module';
-import { LoginComponent } from './auth/login/login.component';
 import { TrainingComponent } from './training/training/training.component';
 import { CurrentTrainingComponent } from './training/current-training/current-training.component';
 import { NewTrainingComponent } from './training/new-training/new-training.component';
@@ -27,11 +26,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { UiService } from './shared/ui.service';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     TrainingComponent,
     CurrentTrainingComponent,
     NewTrainingComponent,
@@ -41,6 +40,7 @@ import { UiService } from './shared/ui.service';
     StopTrainingComponent,
   ],
   imports: [
+    AuthModule,
     AngularFireAuthGuardModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
