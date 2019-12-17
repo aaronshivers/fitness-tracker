@@ -10,7 +10,8 @@ import { AuthRoutingModule } from './auth-routing.module';
   imports: [
     AuthRoutingModule,
     AngularFireAuthModule,
-    SharedModule ],
+    SharedModule,
+  ],
 })
 export class AuthModule {
 }
