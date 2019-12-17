@@ -1,28 +1,13 @@
 import { NgModule } from '@angular/core';
-import { TrainingComponent } from './training/training/training.component';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './welcome/welcome.component';
-import {
-  AngularFireAuthGuard,
-  redirectUnauthorizedTo,
-} from '@angular/fire/auth-guard';
 
-const redirectUnauthorizedToLogin = () => {
-  return redirectUnauthorizedTo([ 'login' ]);
-};
-
-const Routes = [
+const routes: Routes = [
   { path: '', component: WelcomeComponent },
-  {
-    path: 'training',
-    component: TrainingComponent,
-    canActivate: [ AngularFireAuthGuard ],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
-  },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(Routes) ],
+  imports: [ RouterModule.forRoot(routes) ],
   exports: [ RouterModule ],
 })
 export class AppRoutingModule {
