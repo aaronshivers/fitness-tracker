@@ -16,7 +16,7 @@ import { UiService } from './shared/ui.service';
 import { AuthModule } from './auth/auth.module';
 import { TrainingModule } from './training/training.module';
 import { StoreModule } from '@ngrx/store';
-import { appReducer } from './app.reducer';
+import { reducers } from './app.reducer';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { appReducer } from './app.reducer';
     MaterialModule,
     AppRoutingModule,
     LayoutModule,
-    StoreModule.forRoot({ ui: appReducer }),
+    StoreModule.forRoot(reducers),
     TrainingModule,
   ],
   providers: [ UiService ],

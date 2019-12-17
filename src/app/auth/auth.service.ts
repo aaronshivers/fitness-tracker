@@ -6,7 +6,8 @@ import { auth, User } from 'firebase/app';
 import { ExerciseService } from '../exercise.service';
 import { UiService } from '../shared/ui.service';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../app.reducer';
+import * as fromRoot from '../app.reducer';
+import * as UI from '../shared/ui.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private exerciseService: ExerciseService,
     private uiService: UiService,
-    private store: Store<{ ui: fromApp.State }>,
+    private store: Store<{ ui: fromRoot.State }>,
   ) {
     this.user = afAuth.authState;
   }
@@ -36,16 +37,15 @@ export class AuthService {
   }
 
   login(): void {
-    this.store.dispatch({ type: 'START_LOADING' });
-    // this.uiService.loadingStateChanged.next(true);
+    this.store.dispatch(new UI.StartLoading());
     const provider = new auth.GoogleAuthProvider();
+
     this.afAuth.auth.signInWithPopup(provider)
       .then(() => {
-        this.store.dispatch({ type: 'STOP_LOADING' });
-        // this.uiService.loadingStateChanged.next(false);
+        this.store.dispatch(new UI.StopLoading());
       })
       .catch(error => {
-        this.store.dispatch({ type: 'STOP_LOADING' });
+        this.store.dispatch(new UI.StopLoading());
         this.uiService.showSnackbar(error.message, null, 3000);
       });
   }
