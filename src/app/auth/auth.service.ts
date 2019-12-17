@@ -8,6 +8,7 @@ import { UiService } from '../shared/ui.service';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
 import * as UI from '../shared/ui.actions';
+import * as Auth from '../auth/auth.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -28,9 +29,11 @@ export class AuthService {
   initAuthListener() {
     this.afAuth.authState.subscribe((user: User | null) => {
       if (user) {
+        this.store.dispatch(new Auth.SetAuthenticated());
         this.router.navigate([ 'training' ]);
       } else {
         this.exerciseService.cancelSubscriptions();
+        this.store.dispatch(new Auth.SetUnauthenticated());
         this.router.navigate([ 'login' ]);
       }
     });
@@ -38,8 +41,8 @@ export class AuthService {
 
   login(): void {
     this.store.dispatch(new UI.StartLoading());
-    const provider = new auth.GoogleAuthProvider();
 
+    const provider = new auth.GoogleAuthProvider();
     this.afAuth.auth.signInWithPopup(provider)
       .then(() => {
         this.store.dispatch(new UI.StopLoading());
@@ -54,7 +57,7 @@ export class AuthService {
     this.afAuth.auth.signOut();
   }
 
-  getUser(): Observable<User> {
-    return this.user;
-  }
+  // getUser(): Observable<User> {
+  //   return this.user;
+  // }
 }

@@ -3,7 +3,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
-import { User } from 'firebase';
+import * as fromRoot from '../app.reducer';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-nav',
@@ -11,7 +12,8 @@ import { User } from 'firebase';
   styleUrls: [ './nav.component.css' ],
 })
 export class NavComponent implements OnInit {
-  user: User;
+  isAuthenticated$: Observable<boolean>;
+  // user: User;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -19,12 +21,19 @@ export class NavComponent implements OnInit {
       shareReplay(),
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private authService: AuthService,
+    private store: Store<{ 'auth': fromRoot.State }>,
+  ) {
+  }
 
   ngOnInit(): void {
-    this.authService.getUser().subscribe((user: User) => {
-      this.user = user;
-    });
+    this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
+
+    // this.authService.getUser().subscribe((user: User) => {
+    //   this.user = user;
+    // });
   }
 
   onLogout(): void {
