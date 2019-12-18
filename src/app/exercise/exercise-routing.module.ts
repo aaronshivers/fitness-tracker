@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TrainingComponent } from './training/training.component';
+import { ExerciseComponent } from './exercise/exercise.component';
 import { RouterModule, Routes } from '@angular/router';
 
 
@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: TrainingComponent,
+    component: ExerciseComponent,
   },
 ];
 
@@ -16,5 +16,5 @@ const routes: Routes = [
   imports: [ RouterModule.forChild(routes) ],
   exports: [ RouterModule ],
 })
-export class TrainingRoutingModule {
+export class ExerciseRoutingModule {
 }

@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './past-training.component.html',
   styleUrls: [ './past-training.component.css' ],
 })
-export class PastTrainingComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PastExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   dataSource = new MatTableDataSource<Exercise>();
   displayedColumns = [ 'date', 'name', 'duration', 'calories', 'state' ];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

@@ -14,7 +14,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { UiService } from './shared/ui.service';
 import { AuthModule } from './auth/auth.module';
-import { TrainingModule } from './training/training.module';
+import { ExerciseModule } from './exercise/exercise.module';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './app.reducer';
 
@@ -35,7 +35,7 @@ import { reducers } from './app.reducer';
     AppRoutingModule,
     LayoutModule,
     StoreModule.forRoot(reducers),
-    TrainingModule,
+    ExerciseModule,
   ],
   providers: [ UiService ],
   bootstrap: [ AppComponent ],

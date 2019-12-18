@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { StopTrainingComponent } from '../stop-training/stop-training.component';
+import { StopExercisingComponent } from '../stop-exercising/stop-exercising.component';
 import { ExerciseService } from '../../exercise.service';
 
 @Component({
@@ -32,7 +32,7 @@ export class CurrentTrainingComponent implements OnInit {
 
   onStop() {
     clearInterval(this.timer);
-    const dialogRef = this.dialog.open(StopTrainingComponent, {
+    const dialogRef = this.dialog.open(StopExercisingComponent, {
       data: {
         progress: this.progress,
       },

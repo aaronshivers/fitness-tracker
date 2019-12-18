@@ -1,6 +1,6 @@
-<div *ngIf="isTraining; then trainingBlock else selectExerciseBlock"></div>
-<ng-template #trainingBlock>
-  <app-current-training (exitTraining)="isTraining = false"></app-current-training>
+<div *ngIf="isExercising; then exercisingBlock else selectExerciseBlock"></div>
+<ng-template #exercisingBlock>
+  <app-current-training (exitExercise)="isExercising = false"></app-current-training>
 </ng-template>
 <ng-template #selectExerciseBlock>
   <mat-tab-group>

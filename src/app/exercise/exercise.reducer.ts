@@ -4,9 +4,10 @@ import {
   SET_COMPLETED_EXERCISES,
   START_EXERCISING,
   STOP_EXERCISING,
-} from './training.actions';
+} from './exercise.actions';
 import { Exercise } from '../exercise';
 import * as fromRoot from '../app.reducer';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface ExerciseState {
   allExercises: Exercise[];
@@ -51,6 +52,8 @@ export const exerciseReducer = (state: ExerciseState = initialState, action: Exe
   }
 };
 
-export const getAllExercises = (state: ExerciseState) => state.allExercises;
-export const getCompletedExercises = (state: ExerciseState) => state.completedExercises;
-export const getCurrentExercise = (state: ExerciseState) => state.currentExercise;
+export const getExerciseState = createFeatureSelector<ExerciseState>('exercise');
+
+export const getAllExercises = createSelector(getExerciseState, (state: ExerciseState) => state.allExercises);
+export const getCompletedExercises = createSelector (getExerciseState, (state: ExerciseState) => state.completedExercises);
+export const getCurrentExercise = createSelector(getExerciseState, (state: ExerciseState) => state.currentExercise);

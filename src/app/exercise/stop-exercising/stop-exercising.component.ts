@@ -3,10 +3,10 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-stop-training',
-  templateUrl: './stop-training.component.html',
-  styleUrls: ['./stop-training.component.css']
+  templateUrl: './stop-exercising.component.html',
+  styleUrls: ['./stop-exercising.component.css']
 })
-export class StopTrainingComponent implements OnInit {
+export class StopExercisingComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public passedData: any) { }
 

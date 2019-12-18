@@ -5,18 +5,18 @@ import { Exercise } from '../../exercise';
 
 @Component({
   selector: 'app-training',
-  templateUrl: './training.component.html',
-  styleUrls: [ './training.component.css' ],
+  templateUrl: './exercise.component.html',
+  styleUrls: [ './exercise.component.css' ],
 })
-export class TrainingComponent implements OnInit, OnDestroy {
-  isTraining = false;
+export class ExerciseComponent implements OnInit, OnDestroy {
+  isExercising = false;
   exerciseSubscription: Subscription;
 
   constructor(private exerciseService: ExerciseService) { }
 
   ngOnInit() {
     this.exerciseSubscription = this.exerciseService.exerciseChanged.subscribe((exercise: Exercise) => {
-      this.isTraining = !!exercise;
+      this.isExercising = !!exercise;
     });
   }
 

@@ -18,8 +18,8 @@ const routes: Routes = [
   { path: '', component: WelcomeComponent },
   {
     path: 'training',
-    loadChildren: () => import('./training/training.module').then(
-      module => module.TrainingModule),
+    loadChildren: () => import('./exercise/exercise.module').then(
+      module => module.ExerciseModule),
     canActivate: [ AngularFireAuthGuard ],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
