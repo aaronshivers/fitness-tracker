@@ -40,7 +40,11 @@ export const exerciseReducer = (state: ExerciseState = initialState, action: Exe
     case START_EXERCISING:
       return {
         ...state,
-        currentExercise: action.payload,
+        currentExercise: {
+          ...state.allExercises.filter(exercise => {
+            return exercise.id === action.payload;
+          }),
+        },
       };
     case STOP_EXERCISING:
       return {
@@ -52,8 +56,12 @@ export const exerciseReducer = (state: ExerciseState = initialState, action: Exe
   }
 };
 
-export const getExerciseState = createFeatureSelector<ExerciseState>('exercise');
+export const getExerciseState = createFeatureSelector<ExerciseState>(
+  'exercise');
 
-export const getAllExercises = createSelector(getExerciseState, (state: ExerciseState) => state.allExercises);
-export const getCompletedExercises = createSelector (getExerciseState, (state: ExerciseState) => state.completedExercises);
-export const getCurrentExercise = createSelector(getExerciseState, (state: ExerciseState) => state.currentExercise);
+export const getAllExercises = createSelector(getExerciseState,
+  (state: ExerciseState) => state.allExercises);
+export const getCompletedExercises = createSelector(getExerciseState,
+  (state: ExerciseState) => state.completedExercises);
+export const getCurrentExercise = createSelector(getExerciseState,
+  (state: ExerciseState) => state.currentExercise);

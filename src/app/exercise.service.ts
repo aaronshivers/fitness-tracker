@@ -5,8 +5,9 @@ import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UiService } from './shared/ui.service';
 import { Store } from '@ngrx/store';
-import * as fromRoot from './app.reducer';
+import * as fromExercise from './exercise/exercise.reducer';
 import * as UI from './shared/ui.actions';
+import * as Exercises from './exercise/exercise.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +16,13 @@ export class ExerciseService {
   exerciseChanged = new Subject<Exercise>();
   exercisesChanged = new Subject<Exercise[]>();
   completedExercisesChanged = new Subject<Exercise[]>();
-  private allExercises: Exercise[] = [];
   private currentExercise: Exercise;
   private firebaseSubscriptions: Subscription[] = [];
 
   constructor(
     private db: AngularFirestore,
     private uiService: UiService,
-    private store: Store<{ ui: fromRoot.State }>,
+    private store: Store<fromExercise.State>,
   ) {
   }
 
@@ -42,8 +42,7 @@ export class ExerciseService {
           })),
         )
         .subscribe((exercises: Exercise[]) => {
-          this.allExercises = exercises;
-          this.exercisesChanged.next([ ...this.allExercises ]);
+          this.store.dispatch(new Exercises.SetAllExercises(exercises));
           this.store.dispatch(new UI.StopLoading());
         }, () => {
           this.uiService.showSnackbar(
@@ -68,12 +67,7 @@ export class ExerciseService {
   }
 
   startExercise(selectedId: string): void {
-    this.currentExercise = this.allExercises.find(exercise => {
-      return exercise.id === selectedId;
-    });
-    this.exerciseChanged.next({
-      ...this.currentExercise,
-    });
+    this.store.dispatch(new Exercises.StartExercising(selectedId));
   }
 
   cancelExercise(progress: number): void {
@@ -84,7 +78,7 @@ export class ExerciseService {
       date: new Date(),
       state: 'cancelled',
     });
-    this.clearExercise();
+    this.store.dispatch(new Exercises.StopExercising());
   }
 
   completeExercise(): void {
@@ -93,12 +87,7 @@ export class ExerciseService {
       date: new Date(),
       state: 'completed',
     });
-    this.clearExercise();
-  }
-
-  clearExercise(): void {
-    this.currentExercise = null;
-    this.exerciseChanged.next(null);
+    this.store.dispatch(new Exercises.StopExercising());
   }
 
   fetchCompletedOrdCancelledExercises(): void {
@@ -107,7 +96,7 @@ export class ExerciseService {
       .push(this.db.collection('completedExercises')
         .valueChanges()
         .subscribe((exercises: Exercise[]) => {
-          this.completedExercisesChanged.next(exercises);
+          this.store.dispatch(new Exercises.SetCompletedExercises(exercises));
         }));
   }
 

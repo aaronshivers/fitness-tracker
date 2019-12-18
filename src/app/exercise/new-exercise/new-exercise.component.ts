@@ -8,10 +8,10 @@ import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-new-training',
-  templateUrl: './new-training.component.html',
-  styleUrls: [ './new-training.component.css' ],
+  templateUrl: './new-exercise.component.html',
+  styleUrls: [ './new-exercise.component.css' ],
 })
-export class NewTrainingComponent implements OnInit, OnDestroy {
+export class NewExerciseComponent implements OnInit, OnDestroy {
   exercises: Exercise[];
   isLoading$: Observable<boolean>;
   exerciseSubscription: Subscription;

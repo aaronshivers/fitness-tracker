@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ExerciseComponent } from './exercise/exercise.component';
 import { CurrentTrainingComponent } from './current-exercise/current-training.component';
-import { NewTrainingComponent } from './new-training/new-training.component';
+import { NewExerciseComponent } from './new-exercise/new-exercise.component';
 import { PastExerciseComponent } from './past-exercise/past-exercise.component';
 import { StopExercisingComponent } from './stop-exercising/stop-exercising.component';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +16,7 @@ import { StoreModule } from '@ngrx/store';
   declarations: [
     ExerciseComponent,
     CurrentTrainingComponent,
-    NewTrainingComponent,
+    NewExerciseComponent,
     PastExerciseComponent,
     StopExercisingComponent,
   ],

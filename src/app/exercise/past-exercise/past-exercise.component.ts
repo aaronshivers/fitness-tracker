@@ -5,9 +5,9 @@ import { ExerciseService } from '../../exercise.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-past-training',
-  templateUrl: './past-training.component.html',
-  styleUrls: [ './past-training.component.css' ],
+  selector: 'app-past-exercise',
+  templateUrl: './past-exercise.component.html',
+  styleUrls: [ './past-exercise.component.css' ],
 })
 export class PastExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   dataSource = new MatTableDataSource<Exercise>();
