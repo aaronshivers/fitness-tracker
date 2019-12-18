@@ -24,7 +24,6 @@ export class StartExercising implements Action {
   constructor(public payload: string) {}
 }
 
-
 export class StopExercising implements Action {
   readonly type = STOP_EXERCISING;
 }

@@ -56,8 +56,4 @@ export class AuthService {
   logout(): void {
     this.afAuth.auth.signOut();
   }
-
-  // getUser(): Observable<User> {
-  //   return this.user;
-  // }
 }

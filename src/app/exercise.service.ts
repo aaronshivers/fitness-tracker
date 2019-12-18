@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Exercise } from './exercise';
 import { Subject, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UiService } from './shared/ui.service';
 import { Store } from '@ngrx/store';
@@ -13,10 +13,6 @@ import * as Exercises from './exercise/exercise.actions';
   providedIn: 'root',
 })
 export class ExerciseService {
-  exerciseChanged = new Subject<Exercise>();
-  exercisesChanged = new Subject<Exercise[]>();
-  completedExercisesChanged = new Subject<Exercise[]>();
-  private currentExercise: Exercise;
   private firebaseSubscriptions: Subscription[] = [];
 
   constructor(
@@ -50,7 +46,6 @@ export class ExerciseService {
             null,
             3000,
           );
-          this.exercisesChanged.next(null);
           this.store.dispatch(new UI.StopLoading());
         }),
     );
@@ -62,31 +57,39 @@ export class ExerciseService {
       .forEach(subscription => subscription.unsubscribe());
   }
 
-  getCurrentExercise(): Exercise {
-    return { ...this.currentExercise };
-  }
-
   startExercise(selectedId: string): void {
     this.store.dispatch(new Exercises.StartExercising(selectedId));
   }
 
   cancelExercise(progress: number): void {
-    this.addDataToDatabase({
-      ...this.currentExercise,
-      duration: this.currentExercise.duration * progress / 100,
-      calories: this.currentExercise.calories * progress / 100,
-      date: new Date(),
-      state: 'cancelled',
-    });
+    this.store.select(fromExercise.getCurrentExercise)
+      .pipe(take(1))
+      .subscribe((exercise: Exercise) => {
+        this.addDataToDatabase({
+          ...exercise,
+          duration: exercise.duration * progress / 100,
+          calories: exercise.calories * progress / 100,
+          date: new Date(),
+          state: 'cancelled',
+        });
+      });
+
     this.store.dispatch(new Exercises.StopExercising());
   }
 
   completeExercise(): void {
-    this.addDataToDatabase({
-      ...this.currentExercise,
-      date: new Date(),
-      state: 'completed',
-    });
+    this
+      .store
+      .select(fromExercise.getCurrentExercise)
+      .pipe(take(1))
+      .subscribe((exercise: Exercise) => {
+        this.addDataToDatabase({
+          ...exercise,
+          date: new Date(),
+          state: 'completed',
+        });
+      });
+
     this.store.dispatch(new Exercises.StopExercising());
   }
 

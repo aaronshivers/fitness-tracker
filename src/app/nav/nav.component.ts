@@ -13,7 +13,6 @@ import { Store } from '@ngrx/store';
 })
 export class NavComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
-  // user: User;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -30,10 +29,6 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
-
-    // this.authService.getUser().subscribe((user: User) => {
-    //   this.user = user;
-    // });
   }
 
   onLogout(): void {

@@ -1,6 +1,6 @@
-<div *ngIf="isExercising; then exercisingBlock else selectExerciseBlock"></div>
+<div *ngIf="isExercising$ | async; then exercisingBlock else selectExerciseBlock"></div>
 <ng-template #exercisingBlock>
-  <app-current-training (exitExercise)="isExercising = false"></app-current-training>
+  <app-current-training></app-current-training>
 </ng-template>
 <ng-template #selectExerciseBlock>
   <mat-tab-group>

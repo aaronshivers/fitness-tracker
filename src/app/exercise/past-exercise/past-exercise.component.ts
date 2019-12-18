@@ -1,27 +1,35 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Exercise } from '../../exercise';
 import { ExerciseService } from '../../exercise.service';
-import { Subscription } from 'rxjs';
+import * as fromExercise from '../exercise.reducer';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-past-exercise',
   templateUrl: './past-exercise.component.html',
   styleUrls: [ './past-exercise.component.css' ],
 })
-export class PastExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PastExerciseComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Exercise>();
   displayedColumns = [ 'date', 'name', 'duration', 'calories', 'state' ];
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  private exercisesChangedSubscription: Subscription;
 
-  constructor(private exerciseService: ExerciseService) { }
+  constructor(
+    private exerciseService: ExerciseService,
+    private store: Store<fromExercise.State>,
+  ) { }
 
   ngOnInit(): void {
-    this.exercisesChangedSubscription = this.exerciseService.completedExercisesChanged.subscribe((exercises: Exercise[]) => {
-      this.dataSource.data = exercises;
-    });
+    this
+      .store
+      .select(fromExercise.getCompletedExercises)
+      .subscribe((exercises: Exercise[]) => {
+        this.dataSource.data = exercises;
+      });
+
     this.exerciseService.fetchCompletedOrdCancelledExercises();
   }
 
@@ -35,12 +43,6 @@ export class PastExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.exercisesChangedSubscription) {
-      this.exercisesChangedSubscription.unsubscribe();
     }
   }
 }
