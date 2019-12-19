@@ -1,0 +1,13 @@
+@import '../node_modules/@angular/material/theming';
+
+@include mat-core();
+
+$fitness-app-primary: mat-palette($mat-amber);
+$fitness-app-accent: mat-palette($mat-gray, A200, A100, A400);
+$fitness-app-warn: mat-palette($mat-red);
+$mat-light-theme-background: mat-palette($mat-amber);
+$mat-light-theme-foreground: mat-palette($mat-amber);
+
+$fitness-app-theme: mat-light-theme($fitness-app-primary, $fitness-app-accent, $fitness-app-warn);
+
+@include angular-material-theme($fitness-app-theme)
