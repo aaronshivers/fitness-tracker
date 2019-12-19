@@ -54,7 +54,7 @@ export function exerciseReducer(state: ExerciseState = initialState, action: Exe
     default:
       return state;
   }
-};
+}
 
 export const getExerciseState = createFeatureSelector<ExerciseState>('exercise');
 
