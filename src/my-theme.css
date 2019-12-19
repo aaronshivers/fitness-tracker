@@ -557,7 +557,7 @@ textarea.cdk-textarea-autosize-measuring {
   color: #f44336; }
 
 .mat-pseudo-checkbox-disabled {
-  color: #b0b0b0; }
+  color: #686868; }
 
 .mat-primary .mat-pseudo-checkbox-checked,
 .mat-primary .mat-pseudo-checkbox-indeterminate {
@@ -575,7 +575,7 @@ textarea.cdk-textarea-autosize-measuring {
 
 .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled,
 .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled {
-  background: #b0b0b0; }
+  background: #686868; }
 
 .mat-elevation-z0 {
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12); }
@@ -906,9 +906,9 @@ textarea.cdk-textarea-autosize-measuring {
   background-color: #f44336; }
 
 .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background {
-  background-color: #b0b0b0; }
+  background-color: #686868; }
 .mat-checkbox-disabled:not(.mat-checkbox-checked) .mat-checkbox-frame {
-  border-color: #b0b0b0; }
+  border-color: #686868; }
 @media (-ms-high-contrast: active) {
   .mat-checkbox-disabled {
     opacity: 0.5; } }
@@ -1100,6 +1100,10 @@ mat-header-row, mat-row, mat-footer-row,
 
 .mat-input-element {
   caret-color: #ffc107; }
+  .mat-input-element option {
+    color: rgba(0, 0, 0, 0.87); }
+  .mat-input-element option:disabled {
+    color: rgba(0, 0, 0, 0.38); }
 
 .mat-accent .mat-input-element {
   caret-color: #eeeeee; }
@@ -1238,7 +1242,7 @@ mat-header-row, mat-row, mat-footer-row,
 
 .mat-slide-toggle-thumb {
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-  background-color: #fafafa; }
+  background-color: #bdbdbd; }
 
 .mat-primary .mat-slider-track-fill,
 .mat-primary .mat-slider-thumb,
@@ -1429,11 +1433,11 @@ mat-header-row, mat-row, mat-footer-row,
   color: #ffc107; }
 
 .mat-snack-bar-container {
-  color: rgba(255, 255, 255, 0.7);
-  background: #323232;
+  color: rgba(0, 0, 0, 0.87);
+  background: #fafafa;
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12); }
 
 .mat-simple-snackbar-action {
-  color: #eeeeee; }
+  color: inherit; }
 
 /*# sourceMappingURL=my-theme.css.map */
